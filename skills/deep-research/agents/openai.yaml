@@ -1,0 +1,5 @@
+interface:
+  display_name: "Deep Research"
+  short_description: "Multi-phase web research via SearXNG"
+  brand_color: "#2563EB"
+  default_prompt: "Use $deep-research to investigate this topic thoroughly"

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Web Search"
+  short_description: "Search the web via local SearXNG"
+  brand_color: "#10B981"
+  default_prompt: "Use $web-search to find current information on this topic"
