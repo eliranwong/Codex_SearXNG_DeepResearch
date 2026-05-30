@@ -9,7 +9,49 @@ It is the Codex counterpart to the Claude Code plugins in [Claude_SearXNG_DeepRe
 - **`web-search`**: Perform category-specific and time-filtered queries via a local SearXNG engine.
 - **`deep-research`**: A multi-phase research orchestrator that automatically runs queries, drills into subtopics, extracts full-text page content, and synthesizes cited research reports.
 
-## Installation
+# Install SearXNG
+
+Assuming you have Docker installed, run the following commands to install SearXNG:
+
+> For Linux users, run:
+
+```
+mkdir -p ./searxng/core-config/
+cd ./searxng/
+curl -fsSL \
+    -O https://raw.githubusercontent.com/searxng/searxng/master/container/docker-compose.yml \
+    -O https://raw.githubusercontent.com/searxng/searxng/master/container/.env.example
+cp -i .env.example .env
+# edit the default port
+sed -i 's/^#SEARXNG_PORT=8080/SEARXNG_PORT=4000/' .env
+# edit API output format
+sed -i 's/    - html/    - html\n    - json\n    - csv/' core-config/settings.yml
+# start the service
+docker compose up -d
+```
+
+> For macOS users, run:
+
+```
+mkdir -p ./searxng/core-config/
+cd ./searxng/
+curl -fsSL \
+    -O https://raw.githubusercontent.com/searxng/searxng/master/container/docker-compose.yml \
+    -O https://raw.githubusercontent.com/searxng/searxng/master/container/.env.example
+cp -i .env.example .env
+# edit the default port
+sed -i '' 's/^#SEARXNG_PORT=8080/SEARXNG_PORT=4000/' .env
+# edit API output format
+sed -i '' 's/    - html/    - html\n    - json\n    - csv/' core-config/settings.yml
+# start the service
+docker compose up -d
+```
+
+**Remarks**: The installation scripts above changes the SearXNG default port from `8080` to `4000`. If you use another port, manually edit the files `web-search/SKILL.md` and `deep-research/SKILL.md` and change the port number 4000 to the one you use.
+
+For more details, read https://docs.searxng.org/admin/installation-docker.html#installation-container
+
+## Install Skill Files
 
 Copy the two skill folders `web-search` and `deep-research` into either one of the following locations:
 
@@ -24,13 +66,13 @@ Remarks: Be carefaul not to accidently delete the default system skills folder a
 For examples, enter in Codex CLI:
 
 ```
-$web_search "Quantum Computing recent advances
+$web-search "Quantum Computing recent advances
 ```
 
 Or:
 
 ```
-$deep_research Quantum Computing recent advances
+$deep-research Quantum Computing recent advances
 ```
 
 ## Use Azure / Ollama Models in Codex CLI [Optional]
